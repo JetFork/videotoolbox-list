@@ -14,7 +14,12 @@ int main() {
     
     for (CFIndex i = 0; i < size; i++) {
         CFDictionaryRef encoder_dict = CFArrayGetValueAtIndex(encoder_list, i);
-        
+        CFStringRef desc = CFCopyDescription(encoder_dict);
+        char desc_buff[CFStringGetLength(desc) + 1];
+        CFStringGetCString(desc, desc_buff, sizeof(desc_buff), kCFStringEncodingUTF8);
+        printf("desc:%s\n",desc_buff);
+        CFRelease(desc);
+
 #define VT_PRINT(key, name) \
         CFStringRef name##_ref = CFDictionaryGetValue(encoder_dict, key); \
         CFIndex name##_len = CFStringGetLength(name##_ref);               \
